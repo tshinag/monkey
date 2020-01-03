@@ -54,11 +54,26 @@ const (
 	FUNCTION = "FUNCTION"
 	// LET means let token
 	LET = "LET"
+	// TRUE means true token
+	TRUE = "TRUE"
+	// FALSE means false token
+	FALSE = "FALSE"
+	// IF means if token
+	IF = "IF"
+	// ELSE means else token
+	ELSE = "ELSE"
+	// RETURN means return token
+	RETURN = "RETURN"
 )
 
 var keywords = map[string]Type{
-	"fn":  FUNCTION,
-	"let": LET,
+	"fn":     FUNCTION,
+	"let":    LET,
+	"true":   TRUE,
+	"false":  FALSE,
+	"if":     IF,
+	"else":   ELSE,
+	"return": RETURN,
 }
 
 // New initializes Token
