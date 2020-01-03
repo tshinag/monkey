@@ -1,8 +1,9 @@
 package lexer
 
 import (
-	"github.com/tshinag/monkey/token"
 	"testing"
+
+	"github.com/tshinag/monkey/token"
 )
 
 func TestNextToken(t *testing.T) {
