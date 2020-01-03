@@ -50,6 +50,11 @@ const (
 	// RBRACE means right brance token
 	RBRACE = "}"
 
+	// EQ means equals token
+	EQ = "=="
+	// NOTEQ means not equals token
+	NOTEQ = "!="
+
 	// FUNCTION means function token
 	FUNCTION = "FUNCTION"
 	// LET means let token
