@@ -19,7 +19,7 @@ const (
 	// INT means integer
 	INT = "INT" // 1343456
 
-	// ASSIGN means assign token
+	// ASSIGN means assignment token
 	ASSIGN = "="
 	// PLUS means plus token
 	PLUS = "+"
@@ -28,18 +28,18 @@ const (
 	// SEMICOLON means semicolon token
 	SEMICOLON = ";"
 
-	// LPAREN means illegal token
+	// LPAREN means left paren token
 	LPAREN = "("
-	// RPAREN means illegal token
+	// RPAREN means right paren token
 	RPAREN = ")"
-	// LBRACE means illegal token
+	// LBRACE means left brace token
 	LBRACE = "{"
-	// RBRACE means illegal token
+	// RBRACE means right brance token
 	RBRACE = "}"
 
-	// FUNCTION means illegal token
+	// FUNCTION means function token
 	FUNCTION = "FUNCTION"
-	// LET means illegal token
+	// LET means let token
 	LET = "LET"
 )
 
