@@ -23,10 +23,23 @@ const (
 	ASSIGN = "="
 	// PLUS means plus token
 	PLUS = "+"
+	// MINUS means minus token
+	MINUS = "-"
+	// BANG means bang token
+	BANG = "!"
+	// ASTERISK means asterisk token
+	ASTERISK = "*"
+	// SLASH means slash token
+	SLASH = "/"
 	// COMMA means comma token
 	COMMA = ","
 	// SEMICOLON means semicolon token
 	SEMICOLON = ";"
+
+	// LT means less-than token
+	LT = "<"
+	// GT means greater-than token
+	GT = ">"
 
 	// LPAREN means left paren token
 	LPAREN = "("

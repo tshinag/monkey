@@ -26,6 +26,27 @@ func (l *Lexer) NextToken() token.Token {
 	case '=':
 		defer l.readChar()
 		return token.NewChar(token.ASSIGN, l.char)
+	case '+':
+		defer l.readChar()
+		return token.NewChar(token.PLUS, l.char)
+	case '-':
+		defer l.readChar()
+		return token.NewChar(token.MINUS, l.char)
+	case '!':
+		defer l.readChar()
+		return token.NewChar(token.BANG, l.char)
+	case '/':
+		defer l.readChar()
+		return token.NewChar(token.SLASH, l.char)
+	case '*':
+		defer l.readChar()
+		return token.NewChar(token.ASTERISK, l.char)
+	case '<':
+		defer l.readChar()
+		return token.NewChar(token.LT, l.char)
+	case '>':
+		defer l.readChar()
+		return token.NewChar(token.GT, l.char)
 	case ';':
 		defer l.readChar()
 		return token.NewChar(token.SEMICOLON, l.char)
@@ -38,9 +59,6 @@ func (l *Lexer) NextToken() token.Token {
 	case ',':
 		defer l.readChar()
 		return token.NewChar(token.COMMA, l.char)
-	case '+':
-		defer l.readChar()
-		return token.NewChar(token.PLUS, l.char)
 	case '{':
 		defer l.readChar()
 		return token.NewChar(token.LBRACE, l.char)
