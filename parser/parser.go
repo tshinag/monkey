@@ -1,8 +1,8 @@
 package parser
 
 import (
-	"fmt"
 
+	"github.com/pkg/errors"
 	"github.com/tshinag/monkey/ast"
 	"github.com/tshinag/monkey/lexer"
 	"github.com/tshinag/monkey/token"
@@ -152,7 +152,7 @@ func (p *Parser) expectPeek(t token.Type) bool {
 }
 
 func (p *Parser) appendErrorPeek(t token.Type) {
-	err := fmt.Errorf("expected next token to be %s, got %s instead",
+	err := errors.Errorf("expected next token to be %s, got %s instead",
 		t, p.peekToken.Type)
 	p.errors = append(p.errors, err)
 }
