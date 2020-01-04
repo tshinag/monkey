@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"strconv"
 
 	"github.com/pkg/errors"
 	"github.com/tshinag/monkey/ast"
@@ -52,6 +53,7 @@ func New(l *lexer.Lexer) *Parser {
 
 	p.prefixParseFns = make(map[token.Type]prefixParseFn)
 	p.registerPrefix(token.IDENT, p.parseIdentifier)
+	p.registerPrefix(token.INT, p.parseIntegerLiteral)
 
 	// 2つトークンを読み込む。curTokenとpeekTokenの両方がセットされる。
 	p.nextToken()
@@ -140,6 +142,21 @@ func (p *Parser) parseExpression(precedence int) ast.Expression {
 
 func (p *Parser) parseIdentifier() ast.Expression {
 	return &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
+}
+
+func (p *Parser) parseIntegerLiteral() ast.Expression {
+	lit := &ast.IntegerLiteral{Token: p.curToken}
+
+	value, err := strconv.ParseInt(p.curToken.Literal, 0, 64)
+	if err != nil {
+		err := errors.Wrapf(err, "could not parse %q as integer", p.curToken.Literal)
+		p.errors = append(p.errors, err)
+		return nil
+	}
+
+	lit.Value = value
+
+	return lit
 }
 
 func (p *Parser) expectPeek(t token.Type) bool {
