@@ -8,12 +8,39 @@ import (
 	"github.com/tshinag/monkey/token"
 )
 
+const (
+	_ int = iota
+	// LOWEST means the priority for initial state
+	LOWEST
+	// EQUALS means the priority for "=="
+	EQUALS // ==
+	// LESSGREATER means the priority for "<" or ">"
+	LESSGREATER
+	// SUM means the priority for "+"
+	SUM
+	// PRODUCT means the priority for "*"
+	PRODUCT
+	// PREFIX means the priority for "-x" or "!x"
+	PREFIX
+	// CALL means the priority for "f(x)"
+	CALL
+)
+
+type (
+	prefixParseFn func() ast.Expression
+	infixParseFn  func(ast.Expression) ast.Expression
+)
+
 // Parser is the implementation of parser
 type Parser struct {
-	l         *lexer.Lexer
-	errors    []error
+	l      *lexer.Lexer
+	errors []error
+
 	curToken  token.Token
 	peekToken token.Token
+
+	prefixParseFns map[token.Type]prefixParseFn
+	infixParseFns  map[token.Type]infixParseFn
 }
 
 // New initializes Parser
@@ -22,6 +49,9 @@ func New(l *lexer.Lexer) *Parser {
 		l:      l,
 		errors: []error{},
 	}
+
+	p.prefixParseFns = make(map[token.Type]prefixParseFn)
+	p.registerPrefix(token.IDENT, p.parseIdentifier)
 
 	// 2つトークンを読み込む。curTokenとpeekTokenの両方がセットされる。
 	p.nextToken()
@@ -58,7 +88,7 @@ func (p *Parser) parseStatement() ast.Statement {
 	case token.RETURN:
 		return p.parseReturnStatement()
 	default:
-		return nil
+		return p.parseExpressionStatement()
 	}
 }
 
@@ -88,6 +118,30 @@ func (p *Parser) parseReturnStatement() *ast.ReturnStatement {
 	return stmt
 }
 
+func (p *Parser) parseExpressionStatement() *ast.ExpressionStatement {
+	stmt := &ast.ExpressionStatement{Token: p.curToken}
+	stmt.Expression = p.parseExpression(LOWEST)
+
+	if p.isPeekToken(token.SEMICOLON) {
+		p.nextToken()
+	}
+
+	return stmt
+}
+
+func (p *Parser) parseExpression(precedence int) ast.Expression {
+	prefix := p.prefixParseFns[p.curToken.Type]
+	if prefix == nil {
+		return nil
+	}
+	leftExp := prefix()
+	return leftExp
+}
+
+func (p *Parser) parseIdentifier() ast.Expression {
+	return &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
+}
+
 func (p *Parser) expectPeek(t token.Type) bool {
 	if p.isPeekToken(t) {
 		p.nextToken()
@@ -114,4 +168,12 @@ func (p *Parser) isCurToken(t token.Type) bool {
 
 func (p *Parser) isPeekToken(t token.Type) bool {
 	return p.peekToken.IsType(t)
+}
+
+func (p *Parser) registerPrefix(tokenType token.Type, fn prefixParseFn) {
+	p.prefixParseFns[tokenType] = fn
+}
+
+func (p *Parser) registerInfix(tokenType token.Type, fn infixParseFn) {
+	p.infixParseFns[tokenType] = fn
 }
