@@ -97,6 +97,11 @@ func NewIdent(ident string) Token {
 	return New(t, ident)
 }
 
+// IsType checks the token's type
+func (t *Token) IsType(target Type) bool {
+	return t.Type == target
+}
+
 // lookupIdent checks keywords, then returns Type
 func lookupIdent(ident string) Type {
 	if tok, ok := keywords[ident]; ok {
