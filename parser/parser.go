@@ -132,8 +132,10 @@ func (p *Parser) parseExpressionStatement() *ast.ExpressionStatement {
 }
 
 func (p *Parser) parseExpression(precedence int) ast.Expression {
-	prefix := p.prefixParseFns[p.curToken.Type]
+	t := p.curToken.Type
+	prefix := p.prefixParseFns[t]
 	if prefix == nil {
+		p.appendErrorNoPrefixParseFn(t)
 		return nil
 	}
 	leftExp := prefix()
@@ -171,6 +173,11 @@ func (p *Parser) expectPeek(t token.Type) bool {
 func (p *Parser) appendErrorPeek(t token.Type) {
 	err := errors.Errorf("expected next token to be %s, got %s instead",
 		t, p.peekToken.Type)
+	p.errors = append(p.errors, err)
+}
+
+func (p *Parser) appendErrorNoPrefixParseFn(t token.Type) {
+	err := errors.Errorf("no prefix parse function for %s found", t)
 	p.errors = append(p.errors, err)
 }
 
