@@ -6,8 +6,22 @@ import (
 	"io"
 
 	"github.com/tshinag/monkey/lexer"
-	"github.com/tshinag/monkey/token"
+	"github.com/tshinag/monkey/parser"
 )
+
+// MonkeyFace is the ASCII art of monkey lang.
+const MonkeyFace = `            __,__
+   .--.  .-"     "-.  .--.
+  / .. \/  .-. .-.  \/ .. \
+ | |  '|  /   Y   \  |'  | |
+ | \   \  \ 0 | 0 /  /   / |
+  \ '- ,\.-"""""""-./, -' /
+   ''-' /_   ^ ^   _\ '-''
+       |  \._   _./  |
+       \   \ '~' /   /
+        '._ '-=-' _.'
+           '-----'
+`
 
 // PROMPT is the prompt message for REPL
 const PROMPT = ">> "
@@ -25,9 +39,24 @@ func Start(in io.Reader, out io.Writer) {
 
 		line := scanner.Text()
 		l := lexer.New(line)
+		p := parser.New(l)
 
-		for tok := l.NextToken(); tok.Type != token.EOF; tok = l.NextToken() {
-			fmt.Printf("%+v\n", tok)
+		program := p.ParseProgram()
+		if len(p.Errors()) != 0 {
+			printParserErrors(out, p.Errors())
+			continue
 		}
+
+		io.WriteString(out, program.String())
+		io.WriteString(out, "\n")
+	}
+}
+
+func printParserErrors(out io.Writer, errors []error) {
+	io.WriteString(out, MonkeyFace)
+	io.WriteString(out, "Woops! We ran into some monkey business here!\n")
+	io.WriteString(out, " parser errors:\n")
+	for _, err := range errors {
+		io.WriteString(out, "\t"+err.Error()+"\n")
 	}
 }
