@@ -124,7 +124,7 @@ func (p *Parser) parseStatement() ast.Statement {
 	}
 }
 
-func (p *Parser) parseLetStatement() ast.Statement {
+func (p *Parser) parseLetStatement() *ast.LetStatement {
 	stmt := &ast.LetStatement{Token: p.curToken}
 	if !p.expectPeek(token.IDENT) {
 		return nil
@@ -133,8 +133,9 @@ func (p *Parser) parseLetStatement() ast.Statement {
 	if !p.expectPeek(token.ASSIGN) {
 		return nil
 	}
-	// TODO: セミコロンに遭遇するまで式を読み飛ばしてしまっている
-	for !p.isCurToken(token.SEMICOLON) {
+	p.nextToken()
+	stmt.Value = p.parseExpression(LOWEST)
+	if p.isPeekToken(token.SEMICOLON) {
 		p.nextToken()
 	}
 	return stmt
@@ -143,8 +144,8 @@ func (p *Parser) parseLetStatement() ast.Statement {
 func (p *Parser) parseReturnStatement() *ast.ReturnStatement {
 	stmt := &ast.ReturnStatement{Token: p.curToken}
 	p.nextToken()
-	// TODO: セミコロンに遭遇するまで式を読み飛ばしてしまっている
-	for !p.isCurToken(token.SEMICOLON) {
+	stmt.ReturnValue = p.parseExpression(LOWEST)
+	if p.isPeekToken(token.SEMICOLON) {
 		p.nextToken()
 	}
 	return stmt
