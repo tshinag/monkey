@@ -1,0 +1,19 @@
+package object
+
+// Type expresses the type of object
+type Type string
+
+const (
+	// NullObj is the type of null
+	NullObj = "NULL"
+	// IntegerObj is the type of integer
+	IntegerObj = "INTEGER"
+	// BooleanObj is the type of boolean
+	BooleanObj = "BOOLEAN"
+)
+
+// Object is the expression of object
+type Object interface {
+	Type() Type
+	Inspect() string
+}
