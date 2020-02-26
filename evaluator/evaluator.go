@@ -6,6 +6,8 @@ import (
 )
 
 var (
+	// NULL is the instance of "null" literal
+	NULL = &object.Null{}
 	// TRUE is the instance of "true" literal
 	TRUE = &object.Boolean{Value: true}
 	// FALSE is the instance of "false" literal
