@@ -5,6 +5,13 @@ import (
 	"github.com/tshinag/monkey/object"
 )
 
+var (
+	// TRUE is the instance of "true" literal
+	TRUE = &object.Boolean{Value: true}
+	// FALSE is the instance of "false" literal
+	FALSE = &object.Boolean{Value: false}
+)
+
 // Eval evaluates ast.Node
 func Eval(node ast.Node) object.Object {
 	switch node := node.(type) {
@@ -16,6 +23,11 @@ func Eval(node ast.Node) object.Object {
 	// expressions
 	case *ast.IntegerLiteral:
 		return &object.Integer{Value: node.Value}
+	case *ast.Boolean:
+		if node.Value {
+			return TRUE
+		}
+		return FALSE
 	}
 	return nil
 }
