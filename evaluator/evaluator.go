@@ -58,15 +58,13 @@ func evalPrefixExpression(operator string, right object.Object) object.Object {
 }
 
 func evalBangOperatorExpression(right object.Object) object.Object {
-	switch right {
-	case TRUE:
-		return FALSE
-	case FALSE:
-		return TRUE
-	case NULL:
-		return TRUE
+	switch right := right.(type) {
+	case *object.Boolean:
+		return referenceBooleanObject(!right.Value)
+	case *object.Null:
+		return referenceBooleanObject(!false)
 	default:
-		return FALSE
+		return referenceBooleanObject(!true)
 	}
 }
 
