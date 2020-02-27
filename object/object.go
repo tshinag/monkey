@@ -10,6 +10,8 @@ const (
 	IntegerObj = "INTEGER"
 	// BooleanObj is the type of boolean
 	BooleanObj = "BOOLEAN"
+	// ReturnValueObj is the type of return value
+	ReturnValueObj = "RETURN_VALUE"
 )
 
 // Object is the expression of object
