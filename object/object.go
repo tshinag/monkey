@@ -12,6 +12,8 @@ const (
 	BooleanObj = "BOOLEAN"
 	// ReturnValueObj is the type of return value
 	ReturnValueObj = "RETURN_VALUE"
+	// ErrorObj is the type of evalutation error
+	ErrorObj = "ERROR"
 )
 
 // Object is the expression of object
