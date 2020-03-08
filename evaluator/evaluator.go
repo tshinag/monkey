@@ -40,8 +40,14 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 		env.Set(node.Name.Value, val)
 		return nil
 	// expressions
+	case *ast.CallExpression:
+		return evalCallExpression(node, env)
 	case *ast.Identifier:
 		return evalIdentifier(node, env)
+	case *ast.FunctionLiteral:
+		params := node.Parameters
+		body := node.Body
+		return &object.Function{Parameters: params, Env: env, Body: body}
 	case *ast.PrefixExpression:
 		right := Eval(node.Right, env)
 		if isError(right) {
@@ -68,8 +74,7 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 	return nil
 }
 
-func evalProgram(program *ast.Program, env *object.Environment) object.Object {
-	var result object.Object
+func evalProgram(program *ast.Program, env *object.Environment) (result object.Object) {
 	for _, statement := range program.Statements {
 		result = Eval(statement, env)
 		switch result := result.(type) {
@@ -82,8 +87,7 @@ func evalProgram(program *ast.Program, env *object.Environment) object.Object {
 	return result
 }
 
-func evalBlockStatement(block *ast.BlockStatement, env *object.Environment) object.Object {
-	var result object.Object
+func evalBlockStatement(block *ast.BlockStatement, env *object.Environment) (result object.Object) {
 	for _, statement := range block.Statements {
 		result = Eval(statement, env)
 		switch result := result.(type) {
@@ -94,6 +98,36 @@ func evalBlockStatement(block *ast.BlockStatement, env *object.Environment) obje
 		}
 	}
 	return result
+}
+
+func evalCallExpression(node *ast.CallExpression, env *object.Environment) object.Object {
+	function := Eval(node.Function, env)
+	if isError(function) {
+		return function
+	}
+	var args []object.Object
+	for _, e := range node.Arguments {
+		arg := Eval(e, env)
+		if isError(arg) {
+			return arg
+		}
+		args = append(args, arg)
+	}
+	return evalFunction(function, args)
+}
+
+func evalFunction(fn object.Object, args []object.Object) object.Object {
+	function, ok := fn.(*object.Function)
+	if !ok {
+		return newError("not a function: %s", fn.Type())
+	}
+	extendedEnv := extendFunctionEnv(function, args)
+	evaluated := Eval(function.Body, extendedEnv)
+	switch evaluated := evaluated.(type) {
+	case *object.ReturnValue:
+		return evaluated.Value
+	}
+	return evaluated
 }
 
 func evalIdentifier(node *ast.Identifier, env *object.Environment) object.Object {
@@ -199,6 +233,14 @@ func evalIfExpression(ie *ast.IfExpression, env *object.Environment) object.Obje
 	} else {
 		return NULL
 	}
+}
+
+func extendFunctionEnv(fn *object.Function, args []object.Object) *object.Environment {
+	env := object.NewEnclosedEnvironment(fn.Env)
+	for i, param := range fn.Parameters {
+		env.Set(param.Value, args[i])
+	}
+	return env
 }
 
 func isTruthy(obj object.Object) bool {

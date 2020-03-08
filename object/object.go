@@ -14,6 +14,8 @@ const (
 	ReturnValueObj = "RETURN_VALUE"
 	// ErrorObj is the type of evalutation error
 	ErrorObj = "ERROR"
+	// FunctionObj is the type of function
+	FunctionObj = "FUNCTION"
 )
 
 // Object is the expression of object
