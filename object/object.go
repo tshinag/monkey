@@ -8,6 +8,8 @@ const (
 	NullObj = "NULL"
 	// IntegerObj is the type of integer
 	IntegerObj = "INTEGER"
+	// StringObj is the type of string
+	StringObj = "STRING"
 	// BooleanObj is the type of boolean
 	BooleanObj = "BOOLEAN"
 	// ReturnValueObj is the type of return value

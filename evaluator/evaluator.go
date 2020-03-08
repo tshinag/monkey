@@ -68,6 +68,8 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 		return evalIfExpression(node, env)
 	case *ast.IntegerLiteral:
 		return &object.Integer{Value: node.Value}
+	case *ast.StringLiteral:
+		return &object.String{Value: node.Value}
 	case *ast.Boolean:
 		return referenceBooleanObject(node.Value)
 	}
@@ -178,6 +180,11 @@ func evalInfixExpression(
 			return evalIntegerInfixExpression(operator, li, ri)
 		}
 	}
+	if li, ok := left.(*object.String); ok {
+		if ri, ok := right.(*object.String); ok {
+			return evalStringInfixExpression(operator, li, ri)
+		}
+	}
 	return evalObjectInfixExpression(operator, left, right)
 }
 
@@ -212,6 +219,22 @@ func evalIntegerInfixExpression(
 		return referenceBooleanObject(left.Value < right.Value)
 	case ">":
 		return referenceBooleanObject(left.Value > right.Value)
+	case "==":
+		return referenceBooleanObject(left.Value == right.Value)
+	case "!=":
+		return referenceBooleanObject(left.Value != right.Value)
+	default:
+		return newErrorInfixExpression(operator, left, right)
+	}
+}
+
+func evalStringInfixExpression(
+	operator string,
+	left, right *object.String,
+) object.Object {
+	switch operator {
+	case "+":
+		return &object.String{Value: left.Value + right.Value}
 	case "==":
 		return referenceBooleanObject(left.Value == right.Value)
 	case "!=":

@@ -78,6 +78,10 @@ func (l *Lexer) NextToken() token.Token {
 	case 0:
 		defer l.readChar()
 		return token.New(token.EOF, "")
+	case '"':
+		str := l.readString()
+		defer l.readChar()
+		return token.New(token.STRING, str)
 	default:
 		if isLetter(l.char) {
 			ident := l.readIdentifier()
@@ -102,6 +106,15 @@ func (l *Lexer) readIdentifier() string {
 func (l *Lexer) readNumber() string {
 	position := l.position
 	for isDigit(l.char) {
+		l.readChar()
+	}
+	return l.input[position:l.position]
+}
+
+func (l *Lexer) readString() string {
+	position := l.position + 1
+	l.readChar()
+	for !isEndOfString(l.char) {
 		l.readChar()
 	}
 	return l.input[position:l.position]
@@ -147,4 +160,8 @@ func isLetter(ch byte) bool {
 
 func isDigit(ch byte) bool {
 	return '0' <= ch && ch <= '9'
+}
+
+func isEndOfString(ch byte) bool {
+	return ch == '"' || ch == 0
 }

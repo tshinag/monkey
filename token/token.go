@@ -18,6 +18,8 @@ const (
 	IDENT = "IDENT" // add, foobar, x, y, ...
 	// INT means integer
 	INT = "INT" // 1343456
+	// STRING means string
+	STRING = "STRING" // "foo, bar"
 
 	// ASSIGN means assignment token
 	ASSIGN = "="
