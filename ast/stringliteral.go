@@ -8,8 +8,6 @@ type StringLiteral struct {
 	Value string
 }
 
-func (il *StringLiteral) ExpressionNode() {}
-
 // TokenLiteral implements Node interface
 func (il *StringLiteral) TokenLiteral() string {
 	return il.Token.Literal

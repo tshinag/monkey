@@ -12,8 +12,6 @@ type BlockStatement struct {
 	Statements []Statement
 }
 
-func (bs *BlockStatement) StatementNode() {}
-
 // TokenLiteral implements Node interface
 func (bs *BlockStatement) TokenLiteral() string {
 	return bs.Token.Literal

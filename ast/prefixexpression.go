@@ -13,8 +13,6 @@ type PrefixExpression struct {
 	Right    Expression
 }
 
-func (pe *PrefixExpression) ExpressionNode() {}
-
 // TokenLiteral implements Node interface
 func (pe *PrefixExpression) TokenLiteral() string {
 	return pe.Token.Literal

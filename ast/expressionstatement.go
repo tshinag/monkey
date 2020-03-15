@@ -8,8 +8,6 @@ type ExpressionStatement struct {
 	Expression Expression
 }
 
-func (es *ExpressionStatement) StatementNode() {}
-
 // TokenLiteral implements Node interface
 func (es *ExpressionStatement) TokenLiteral() string {
 	return es.Token.Literal

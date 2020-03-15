@@ -14,8 +14,6 @@ type CallExpression struct {
 	Arguments []Expression
 }
 
-func (ce *CallExpression) ExpressionNode() {}
-
 // TokenLiteral implements Node interface
 func (ce *CallExpression) TokenLiteral() string {
 	return ce.Token.Literal

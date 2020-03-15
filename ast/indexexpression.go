@@ -13,8 +13,6 @@ type IndexExpression struct {
 	Index Expression
 }
 
-func (ie *IndexExpression) ExpressionNode() {}
-
 // TokenLiteral implements Node interface
 func (ie *IndexExpression) TokenLiteral() string {
 	return ie.Token.Literal

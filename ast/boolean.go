@@ -8,8 +8,6 @@ type Boolean struct {
 	Value bool
 }
 
-func (b *Boolean) ExpressionNode() {}
-
 // TokenLiteral implements Node interface
 func (b *Boolean) TokenLiteral() string {
 	return b.Token.Literal

@@ -12,8 +12,6 @@ type ReturnStatement struct {
 	ReturnValue Expression
 }
 
-func (rs *ReturnStatement) StatementNode() {}
-
 // TokenLiteral implements Node interface
 func (rs *ReturnStatement) TokenLiteral() string {
 	return rs.Token.Literal

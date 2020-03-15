@@ -8,8 +8,6 @@ type Identifier struct {
 	Value string
 }
 
-func (i *Identifier) ExpressionNode() {}
-
 // TokenLiteral implements Node interface
 func (i *Identifier) TokenLiteral() string {
 	return i.Token.Literal

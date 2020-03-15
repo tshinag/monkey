@@ -13,8 +13,6 @@ type LetStatement struct {
 	Value Expression
 }
 
-func (ls *LetStatement) StatementNode() {}
-
 // TokenLiteral implements Node interface
 func (ls *LetStatement) TokenLiteral() string {
 	return ls.Token.Literal
