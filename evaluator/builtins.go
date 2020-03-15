@@ -7,6 +7,7 @@ var builtins = map[string]*object.Builtin{
 	"first": &object.Builtin{Fn: fnFirst},
 	"last":  &object.Builtin{Fn: fnLast},
 	"rest":  &object.Builtin{Fn: fnRest},
+	"push":  &object.Builtin{Fn: fnPush},
 }
 
 func fnLen(args ...object.Object) object.Object {
@@ -70,5 +71,20 @@ func fnRest(args ...object.Object) object.Object {
 	default:
 		return newError("argument to `rest` must be ARRAY, got %s", args[0].Type())
 	}
+}
 
+func fnPush(args ...object.Object) object.Object {
+	if len(args) != 2 {
+		return newError("wrong number of arguments. got=%d, want=2", len(args))
+	}
+	switch arg := args[0].(type) {
+	case *object.Array:
+		length := len(arg.Elements)
+		newElements := make([]object.Object, length+1, length+1)
+		copy(newElements, arg.Elements)
+		newElements[length] = args[1]
+		return &object.Array{Elements: newElements}
+	default:
+		return newError("argument to `push` must be ARRAY, got %s", args[0].Type())
+	}
 }
