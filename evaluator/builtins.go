@@ -3,10 +3,10 @@ package evaluator
 import "github.com/tshinag/monkey/object"
 
 var builtins = map[string]*object.Builtin{
-	"len": &object.Builtin{Fn: lenImpl},
+	"len": &object.Builtin{Fn: fnLen},
 }
 
-func lenImpl(args ...object.Object) object.Object {
+func fnLen(args ...object.Object) object.Object {
 	if len(args) != 1 {
 		return newError("wrong number of arguments. got=%d, want=1", len(args))
 	}
