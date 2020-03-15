@@ -6,6 +6,7 @@ var builtins = map[string]*object.Builtin{
 	"len":   &object.Builtin{Fn: fnLen},
 	"first": &object.Builtin{Fn: fnFirst},
 	"last":  &object.Builtin{Fn: fnLast},
+	"rest":  &object.Builtin{Fn: fnRest},
 }
 
 func fnLen(args ...object.Object) object.Object {
@@ -49,6 +50,25 @@ func fnLast(args ...object.Object) object.Object {
 		}
 		return NULL
 	default:
-		return newError("argument to `first` must be ARRAY, got %s", args[0].Type())
+		return newError("argument to `last` must be ARRAY, got %s", args[0].Type())
 	}
+}
+
+func fnRest(args ...object.Object) object.Object {
+	if len(args) != 1 {
+		return newError("wrong number of arguments. got=%d, want=1", len(args))
+	}
+	switch arg := args[0].(type) {
+	case *object.Array:
+		length := len(arg.Elements)
+		if length > 0 {
+			newElements := make([]object.Object, length-1, length-1)
+			copy(newElements, arg.Elements[1:length])
+			return &object.Array{Elements: newElements}
+		}
+		return NULL
+	default:
+		return newError("argument to `rest` must be ARRAY, got %s", args[0].Type())
+	}
+
 }
