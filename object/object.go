@@ -4,24 +4,24 @@ package object
 type Type string
 
 const (
-	// NullObj is the type of null
-	NullObj = "NULL"
-	// IntegerObj is the type of integer
-	IntegerObj = "INTEGER"
-	// StringObj is the type of string
-	StringObj = "STRING"
-	// BooleanObj is the type of boolean
-	BooleanObj = "BOOLEAN"
-	// ReturnValueObj is the type of return value
-	ReturnValueObj = "RETURN_VALUE"
-	// ErrorObj is the type of evalutation error
-	ErrorObj = "ERROR"
-	// FunctionObj is the type of function
-	FunctionObj = "FUNCTION"
-	// ArrayObj is the type of function
-	ArrayObj = "ARRAY"
-	// BuiltinObj is the type of built-in object
-	BuiltinObj = "BUILTIN"
+	// NullType is the type of null
+	NullType = "NULL"
+	// IntegerType is the type of integer
+	IntegerType = "INTEGER"
+	// StringType is the type of string
+	StringType = "STRING"
+	// BooleanType is the type of boolean
+	BooleanType = "BOOLEAN"
+	// ReturnValueType is the type of return value
+	ReturnValueType = "RETURN_VALUE"
+	// ErrorType is the type of evalutation error
+	ErrorType = "ERROR"
+	// FunctionType is the type of function
+	FunctionType = "FUNCTION"
+	// ArrayType is the type of function
+	ArrayType = "ARRAY"
+	// BuiltinType is the type of built-in object
+	BuiltinType = "BUILTIN"
 )
 
 // Object is the expression of object

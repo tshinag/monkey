@@ -10,7 +10,7 @@ type Builtin struct {
 
 // Type returns the type of object
 func (b *Builtin) Type() Type {
-	return BuiltinObj
+	return BuiltinType
 }
 
 // Inspect returns the string expression of object

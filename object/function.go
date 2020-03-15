@@ -16,7 +16,7 @@ type Function struct {
 
 // Type returns the type of object
 func (f *Function) Type() Type {
-	return FunctionObj
+	return FunctionType
 }
 
 // Inspect returns the string expression of object

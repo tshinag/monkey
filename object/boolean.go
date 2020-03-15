@@ -9,7 +9,7 @@ type Boolean struct {
 
 // Type returns the type of object
 func (b *Boolean) Type() Type {
-	return BooleanObj
+	return BooleanType
 }
 
 // Inspect returns the string expression of object

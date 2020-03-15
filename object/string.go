@@ -7,7 +7,7 @@ type String struct {
 
 // Type returns the type of object
 func (s *String) Type() Type {
-	return StringObj
+	return StringType
 }
 
 // Inspect returns the string expression of object

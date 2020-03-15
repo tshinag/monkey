@@ -9,7 +9,7 @@ type Integer struct {
 
 // Type returns the type of object
 func (i *Integer) Type() Type {
-	return IntegerObj
+	return IntegerType
 }
 
 // Inspect returns the string expression of object

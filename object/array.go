@@ -12,7 +12,7 @@ type Array struct {
 
 // Type returns the type of object
 func (a *Array) Type() Type {
-	return ArrayObj
+	return ArrayType
 }
 
 // Inspect returns the string expression of object
