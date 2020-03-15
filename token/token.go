@@ -51,6 +51,10 @@ const (
 	LBRACE = "{"
 	// RBRACE means right brance token
 	RBRACE = "}"
+	// LBRACKET means left bracket token
+	LBRACKET = "["
+	// RBRACKET means right bracket token
+	RBRACKET = "]"
 
 	// EQ means equals token
 	EQ = "=="

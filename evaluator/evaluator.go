@@ -48,6 +48,8 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 		params := node.Parameters
 		body := node.Body
 		return &object.Function{Parameters: params, Env: env, Body: body}
+	case *ast.ArrayLiteral:
+		return evalArrayLiteral(node, env)
 	case *ast.PrefixExpression:
 		right := Eval(node.Right, env)
 		if isError(right) {
@@ -133,6 +135,18 @@ func evalFunction(fn object.Object, args []object.Object) object.Object {
 	default:
 		return newError("not a function: %s", fn.Type())
 	}
+}
+
+func evalArrayLiteral(node *ast.ArrayLiteral, env *object.Environment) object.Object {
+	var elements []object.Object
+	for _, e := range node.Elements {
+		element := Eval(e, env)
+		if isError(element) {
+			return element
+		}
+		elements = append(elements, element)
+	}
+	return &object.Array{Elements: elements}
 }
 
 func evalIdentifier(node *ast.Identifier, env *object.Environment) object.Object {

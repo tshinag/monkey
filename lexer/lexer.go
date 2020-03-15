@@ -75,6 +75,12 @@ func (l *Lexer) NextToken() token.Token {
 	case '}':
 		defer l.readChar()
 		return token.NewChar(token.RBRACE, l.char)
+	case '[':
+		defer l.readChar()
+		return token.NewChar(token.LBRACKET, l.char)
+	case ']':
+		defer l.readChar()
+		return token.NewChar(token.RBRACKET, l.char)
 	case 0:
 		defer l.readChar()
 		return token.New(token.EOF, "")

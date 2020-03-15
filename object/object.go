@@ -18,6 +18,8 @@ const (
 	ErrorObj = "ERROR"
 	// FunctionObj is the type of function
 	FunctionObj = "FUNCTION"
+	// ArrayObj is the type of function
+	ArrayObj = "ARRAY"
 	// BuiltinObj is the type of built-in object
 	BuiltinObj = "BUILTIN"
 )
