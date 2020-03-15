@@ -16,12 +16,20 @@ func fnLen(args ...object.Object) object.Object {
 	}
 	switch arg := args[0].(type) {
 	case *object.String:
-		return &object.Integer{Value: int64(len(arg.Value))}
+		return fnLenString(arg)
 	case *object.Array:
-		return &object.Integer{Value: int64(len(arg.Elements))}
+		return fnLenArray(arg)
 	default:
-		return newError("argument to `len` not supported, got %s", args[0].Type())
+		return newError("argument to `len` not supported, got %s", arg.Type())
 	}
+}
+
+func fnLenString(str *object.String) object.Object {
+	return &object.Integer{Value: int64(len(str.Value))}
+}
+
+func fnLenArray(arr *object.Array) object.Object {
+	return &object.Integer{Value: int64(len(arr.Elements))}
 }
 
 func fnFirst(args ...object.Object) object.Object {
@@ -30,13 +38,17 @@ func fnFirst(args ...object.Object) object.Object {
 	}
 	switch arg := args[0].(type) {
 	case *object.Array:
-		if len(arg.Elements) > 0 {
-			return arg.Elements[0]
-		}
-		return NULL
+		return fnFirstArray(arg)
 	default:
 		return newError("argument to `first` must be ARRAY, got %s", args[0].Type())
 	}
+}
+
+func fnFirstArray(arr *object.Array) object.Object {
+	if len(arr.Elements) > 0 {
+		return arr.Elements[0]
+	}
+	return NULL
 }
 
 func fnLast(args ...object.Object) object.Object {
@@ -45,14 +57,18 @@ func fnLast(args ...object.Object) object.Object {
 	}
 	switch arg := args[0].(type) {
 	case *object.Array:
-		length := len(arg.Elements)
-		if length > 0 {
-			return arg.Elements[length-1]
-		}
-		return NULL
+		return fnLastArray(arg)
 	default:
 		return newError("argument to `last` must be ARRAY, got %s", args[0].Type())
 	}
+}
+
+func fnLastArray(arr *object.Array) object.Object {
+	length := len(arr.Elements)
+	if length > 0 {
+		return arr.Elements[length-1]
+	}
+	return NULL
 }
 
 func fnRest(args ...object.Object) object.Object {
@@ -61,16 +77,20 @@ func fnRest(args ...object.Object) object.Object {
 	}
 	switch arg := args[0].(type) {
 	case *object.Array:
-		length := len(arg.Elements)
-		if length > 0 {
-			newElements := make([]object.Object, length-1, length-1)
-			copy(newElements, arg.Elements[1:length])
-			return &object.Array{Elements: newElements}
-		}
-		return NULL
+		return fnRestArray(arg)
 	default:
 		return newError("argument to `rest` must be ARRAY, got %s", args[0].Type())
 	}
+}
+
+func fnRestArray(arr *object.Array) object.Object {
+	length := len(arr.Elements)
+	if length > 0 {
+		newElements := make([]object.Object, length-1, length-1)
+		copy(newElements, arr.Elements[1:length])
+		return &object.Array{Elements: newElements}
+	}
+	return NULL
 }
 
 func fnPush(args ...object.Object) object.Object {
@@ -79,12 +99,16 @@ func fnPush(args ...object.Object) object.Object {
 	}
 	switch arg := args[0].(type) {
 	case *object.Array:
-		length := len(arg.Elements)
-		newElements := make([]object.Object, length+1, length+1)
-		copy(newElements, arg.Elements)
-		newElements[length] = args[1]
-		return &object.Array{Elements: newElements}
+		return fnPushArray(arg, args[1])
 	default:
 		return newError("argument to `push` must be ARRAY, got %s", args[0].Type())
 	}
+}
+
+func fnPushArray(arr *object.Array, obj object.Object) object.Object {
+	length := len(arr.Elements)
+	newElements := make([]object.Object, length+1, length+1)
+	copy(newElements, arr.Elements)
+	newElements[length] = obj
+	return &object.Array{Elements: newElements}
 }
