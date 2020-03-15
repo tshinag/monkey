@@ -50,6 +50,16 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 		return &object.Function{Parameters: params, Env: env, Body: body}
 	case *ast.ArrayLiteral:
 		return evalArrayLiteral(node, env)
+	case *ast.IndexExpression:
+		left := Eval(node.Left, env)
+		if isError(left) {
+			return left
+		}
+		index := Eval(node.Index, env)
+		if isError(index) {
+			return index
+		}
+		return evalIndexExpression(left, index)
 	case *ast.PrefixExpression:
 		right := Eval(node.Right, env)
 		if isError(right) {
@@ -147,6 +157,27 @@ func evalArrayLiteral(node *ast.ArrayLiteral, env *object.Environment) object.Ob
 		elements = append(elements, element)
 	}
 	return &object.Array{Elements: elements}
+}
+
+func evalIndexExpression(left, index object.Object) object.Object {
+	l, ok := left.(*object.Array)
+	if !ok {
+		return newError("index operator not supported: %s", left.Type())
+	}
+	i, ok := index.(*object.Integer)
+	if !ok {
+		return newError("index operator not supported: %s", left.Type())
+	}
+	return evalArrayIndexExpression(l, i)
+}
+
+func evalArrayIndexExpression(array *object.Array, index *object.Integer) object.Object {
+	idx := index.Value
+	max := int64(len(array.Elements) - 1)
+	if idx < 0 || idx > max {
+		return NULL
+	}
+	return array.Elements[idx]
 }
 
 func evalIdentifier(node *ast.Identifier, env *object.Environment) object.Object {
