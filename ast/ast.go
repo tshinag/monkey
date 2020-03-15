@@ -13,13 +13,13 @@ type Node interface {
 // Statement is the expression of statement
 type Statement interface {
 	Node
-	statementNode()
+	StatementNode()
 }
 
 // Expression is the expression of expression
 type Expression interface {
 	Node
-	expressionNode()
+	ExpressionNode()
 }
 
 // Program is a set of Statement

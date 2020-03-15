@@ -12,7 +12,7 @@ type BlockStatement struct {
 	Statements []Statement
 }
 
-func (bs *BlockStatement) statementNode() {}
+func (bs *BlockStatement) StatementNode() {}
 
 // TokenLiteral implements Node interface
 func (bs *BlockStatement) TokenLiteral() string {

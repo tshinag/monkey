@@ -8,7 +8,7 @@ type IntegerLiteral struct {
 	Value int64
 }
 
-func (il *IntegerLiteral) expressionNode() {}
+func (il *IntegerLiteral) ExpressionNode() {}
 
 // TokenLiteral implements Node interface
 func (il *IntegerLiteral) TokenLiteral() string {

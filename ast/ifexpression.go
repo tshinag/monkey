@@ -14,7 +14,7 @@ type IfExpression struct {
 	Alternative *BlockStatement
 }
 
-func (ie *IfExpression) expressionNode() {}
+func (ie *IfExpression) ExpressionNode() {}
 
 // TokenLiteral implements Node interface
 func (ie *IfExpression) TokenLiteral() string {

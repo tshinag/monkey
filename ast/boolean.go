@@ -8,7 +8,7 @@ type Boolean struct {
 	Value bool
 }
 
-func (b *Boolean) expressionNode() {}
+func (b *Boolean) ExpressionNode() {}
 
 // TokenLiteral implements Node interface
 func (b *Boolean) TokenLiteral() string {

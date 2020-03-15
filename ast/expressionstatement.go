@@ -8,7 +8,7 @@ type ExpressionStatement struct {
 	Expression Expression
 }
 
-func (es *ExpressionStatement) statementNode() {}
+func (es *ExpressionStatement) StatementNode() {}
 
 // TokenLiteral implements Node interface
 func (es *ExpressionStatement) TokenLiteral() string {

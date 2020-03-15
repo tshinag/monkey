@@ -8,7 +8,7 @@ type Identifier struct {
 	Value string
 }
 
-func (i *Identifier) expressionNode() {}
+func (i *Identifier) ExpressionNode() {}
 
 // TokenLiteral implements Node interface
 func (i *Identifier) TokenLiteral() string {

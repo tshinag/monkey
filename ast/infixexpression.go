@@ -14,7 +14,7 @@ type InfixExpression struct {
 	Right    Expression
 }
 
-func (oe *InfixExpression) expressionNode() {}
+func (oe *InfixExpression) ExpressionNode() {}
 
 // TokenLiteral implements Node interface
 func (oe *InfixExpression) TokenLiteral() string {

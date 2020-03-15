@@ -13,7 +13,7 @@ type ArrayLiteral struct {
 	Elements []Expression
 }
 
-func (al *ArrayLiteral) expressionNode() {}
+func (al *ArrayLiteral) ExpressionNode() {}
 
 // TokenLiteral implements Node interface
 func (al *ArrayLiteral) TokenLiteral() string {

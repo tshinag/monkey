@@ -14,7 +14,7 @@ type FunctionLiteral struct {
 	Body       *BlockStatement
 }
 
-func (fl *FunctionLiteral) expressionNode() {}
+func (fl *FunctionLiteral) ExpressionNode() {}
 
 // TokenLiteral implements Node interface
 func (fl *FunctionLiteral) TokenLiteral() string {
