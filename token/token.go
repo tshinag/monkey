@@ -49,7 +49,7 @@ const (
 	RPAREN = ")"
 	// LBRACE means left brace token
 	LBRACE = "{"
-	// RBRACE means right brance token
+	// RBRACE means right brace token
 	RBRACE = "}"
 	// LBRACKET means left bracket token
 	LBRACKET = "["
