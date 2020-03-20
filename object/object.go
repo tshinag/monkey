@@ -18,7 +18,7 @@ const (
 	ErrorType = "ERROR"
 	// FunctionType is the type of function
 	FunctionType = "FUNCTION"
-	// ArrayType is the type of function
+	// ArrayType is the type of array
 	ArrayType = "ARRAY"
 	// HashType is the type of hash
 	HashType = "HASH"
