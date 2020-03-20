@@ -20,6 +20,8 @@ const (
 	FunctionType = "FUNCTION"
 	// ArrayType is the type of function
 	ArrayType = "ARRAY"
+	// HashType is the type of hash
+	HashType = "HASH"
 	// BuiltinType is the type of built-in object
 	BuiltinType = "BUILTIN"
 )

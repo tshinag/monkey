@@ -16,3 +16,8 @@ func (i *Integer) Type() Type {
 func (i *Integer) Inspect() string {
 	return fmt.Sprintf("%d", i.Value)
 }
+
+// HashKey returns the hash key for hash map
+func (i *Integer) HashKey() HashKey {
+	return HashKey{Type: i.Type(), Value: uint64(i.Value)}
+}

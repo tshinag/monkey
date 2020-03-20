@@ -35,6 +35,8 @@ const (
 	SLASH = "/"
 	// COMMA means comma token
 	COMMA = ","
+	// COLON means colon token
+	COLON = ":"
 	// SEMICOLON means semicolon token
 	SEMICOLON = ";"
 
